@@ -35,6 +35,7 @@ It is designed as a layer-based pattern (for building modules, architectures, an
 
 
 ## Estructura
+```
 my_project/
 │
 ├── config.py             # Project configuration file
@@ -52,7 +53,7 @@ my_project/
     └── training/         # Folder for compiling and starting training
         └── train_a.py    # Example content
         └── train_b.py
-
+```
 # Instalation
 ``` 
 pip install deeptrain 
