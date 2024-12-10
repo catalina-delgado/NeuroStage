@@ -1,8 +1,8 @@
-# NeuroState
-"NeuroState is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
+# NeuroStage
+"NeuroStage is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
 
 # Purpose
-NeuroState was born from the idea of automatically generating projects, with a specific focus on building deep learning models using TensorFlow. It is a tool designed for new users who need a standard structure without having to worry about organizing the project from scratch.
+NeuroStage was born from the idea of automatically generating projects, with a specific focus on building deep learning models using TensorFlow. It is a tool designed for new users who need a standard structure without having to worry about organizing the project from scratch.
 
 # Índice
 
@@ -56,12 +56,12 @@ my_project/
 ```
 # Installation
 ``` 
-pip install neurostate
+pip install neurostage
 ```
 # Usage Flow
 ## Start a new project
 ```
-state startproject my_project
+stage startproject my_project
 ```
 ## create a new layer
 File: src/layers/layer_custom.py
@@ -102,11 +102,11 @@ class ModelCustom():
 ## Create a training runner
 File: src/training/train_custom.py
 ```python
-from functions import DeepTrain
+from functions import NeuroStage
 from imports import tf, np
 from src.models.model import Model
 
-class TrainModel(DeepTrain):
+class TrainModel(NeuroStage):
     def __init__(self, batch_size=32, epochs=4, model_name='', models=None):
         super().__init__()
         
@@ -133,5 +133,5 @@ class TrainModel(DeepTrain):
 ```
 ## Execution
 ```
-state run --batch_size 32 --epochs 10 --model_name my_model
+stage run --batch_size 32 --epochs 10 --model_name my_model
 ```
