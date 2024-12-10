@@ -34,7 +34,7 @@ It is designed as a layer-based pattern (for building modules, architectures, an
 | Collaboration            | Avalable                                               |
 
 
-## Estructura
+## Project Structure
 ```
 my_project/
 │
