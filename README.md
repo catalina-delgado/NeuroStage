@@ -54,7 +54,7 @@ my_project/
         └── train_a.py    # Example content
         └── train_b.py
 ```
-# Instalation
+# Installation
 ``` 
 pip install deeptrain 
 ```
