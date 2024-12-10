@@ -15,7 +15,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
 
 class InitMain:
-    """Primary class for managing DeepTrain commands and operations"""
+    """Primary class for managing NeuroStage commands and operations"""
 
     def __init__(self):
         pass
@@ -23,7 +23,7 @@ class InitMain:
     def execute(self):
         
         parser = CustomArgumentParser(
-            description="DeepTrain: A framework for testing and training deep learning models."
+            description="NeuroStage: A framework for testing and training deep learning models."
         )
         subparsers = parser.add_subparsers(dest='command')
 
@@ -138,13 +138,13 @@ class InitMain:
         print( """ 
               Usage example: 
               1. Train a specific model: 
-              deeptrain run --batch_size 32 --epochs 10 --model_name my_model 
+              stage run --batch_size 32 --epochs 10 --model_name my_model 
               
               2. List the available models: 
-              deeptrain --list 
+              stage --list 
               
               3. Create a new project: 
-              deeptrain startproject my_project 
+              stage startproject my_project 
               """ )
 
 

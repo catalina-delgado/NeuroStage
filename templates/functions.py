@@ -1,8 +1,8 @@
 from imports import *
 
-class DeepTrain():
+class NeuroStage():
     def __init__(self):
-        print('DeepTrain')
+        print('NeuroStage')
         
     def get_summary(self, model):
         return model.summary()
