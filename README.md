@@ -1,8 +1,8 @@
-# DeepTrain
-"DeepTrain is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
+# NeuroState
+"NeuroState is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
 
 # Purpose
-DeepTrain was born from the idea of automatically generating projects, with a specific focus on building deep learning models using TensorFlow. It is a tool designed for new users who need a standard structure without having to worry about organizing the project from scratch.
+NeuroState was born from the idea of automatically generating projects, with a specific focus on building deep learning models using TensorFlow. It is a tool designed for new users who need a standard structure without having to worry about organizing the project from scratch.
 
 # Índice
 
@@ -56,12 +56,12 @@ my_project/
 ```
 # Installation
 ``` 
-pip install deeptrain 
+pip install neurostate
 ```
 # Usage Flow
 ## Start a new project
 ```
-deeptrain startproject my_project
+state startproject my_project
 ```
 ## create a new layer
 File: src/layers/layer_custom.py
@@ -133,5 +133,5 @@ class TrainModel(DeepTrain):
 ```
 ## Execution
 ```
-deeptrain run --batch_size 32 --epochs 10 --model_name my_model
+state run --batch_size 32 --epochs 10 --model_name my_model
 ```
