@@ -1,13 +1,14 @@
 from setuptools import setup, find_packages 
 import os 
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r', encoding='utf-8') as fh: 
+with open(os.path.join(os.path.dirname(__file__), 'README_pypi.md'), 'r', encoding='utf-8') as fh: 
     long_description = fh.read()
 
 setup(
     name="neurostage",  
-    version="0.1",
+    version="0.1.1",
     packages=find_packages(include=['templates', 'templates.*']),
+    py_modules=["main", "__main__"],
     include_package_data=True,
     install_requires=[
         "numpy",
@@ -15,7 +16,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "stage=main:main",  # "Command 'deeptrain' runs the 'main' function from 'main.py'"
+            "stage=main:main", 
         ],
     },
     author='Catalina Delgado', 
