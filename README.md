@@ -9,7 +9,7 @@ NeuroStage was born from the idea of automatically generating projects, with a s
 1. [Design](#Design)
 2. [Features](#Features)
 3. [Installation](#installation) 
-4. [Usage Flow](#usage)
+4. [Usage Flow](#usage-flow)
    
 # Design
 It is designed as a layer-based pattern (for building modules, architectures, and training) which is excellent for organizing a TensorFlow framework for deep learning testing. This modular approach facilitates integration with TensorBoard and promotes scalability. 
@@ -55,10 +55,13 @@ my_project/
         └── train_b.py
 ```
 # Installation
+To install **NeuroStage**, simply run the following command:
 ``` 
 pip install neurostage
 ```
-# Usage Flow
+For more detailed information, visit the project page on PyPI:
+[NeuroStage](https://pypi.org/project/neurostage/)
+# Usage-Flow
 ## Start a new project
 ```
 stage startproject my_project
