@@ -21,6 +21,7 @@ setup(
     author='Catalina Delgado', 
     author_email='catalina08delgado@gmail.com', 
     description='A framework for managing deep learning projects', 
+    long_description=long_description,
     long_description_content_type='text/markdown', 
     url='https://github.com/catalina-delgado/NeuroStage', 
     classifiers=[ 'Programming Language :: Python :: 3', 'License :: OSI Approved :: MIT License', 'Operating System :: OS Independent', ], 
