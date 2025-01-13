@@ -10,6 +10,7 @@ NeuroStage was born from the idea of automatically generating projects, with a s
 2. [Features](#Features)
 3. [Installation](#installation) 
 4. [Usage Flow](#usage-flow)
+5. [Common Errors](https://github.com/catalina-delgado/NeuroStage/blob/main/TROUBLESHOOTING.md)
    
 # Design
 It is designed as a layer-based pattern (for building modules, architectures, and training) which is excellent for organizing a TensorFlow framework for deep learning testing. This modular approach facilitates integration with TensorBoard and promotes scalability. 
