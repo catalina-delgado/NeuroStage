@@ -20,7 +20,7 @@ def run_train_scripts(batch_size, epochs, model_name, project_dir):
             
             if train_class:
                 print(f"Running {module_name}.{train_class.__name__}()")
-                instance = train_class(batch_size=batch_size, epochs=epochs, model_name=model_name, models=models)
+                instance = train_class(batch_size=batch_size, epochs=epochs, model_name=model_name)
 
                 for method_name in dir(instance):
                     if method_name.startswith("train"):

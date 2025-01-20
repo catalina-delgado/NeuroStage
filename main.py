@@ -3,7 +3,7 @@ import os
 import sys
 import importlib
 import shutil
-
+import traceback
 
 class CustomArgumentParser(argparse.ArgumentParser):
     """Customize the parser's error handling to provide more user-friendly messages"""
@@ -108,18 +108,23 @@ class InitMain:
         
         try:
             current_working_dir = os.getcwd()
-            project_dir = os.path.join(current_working_dir) 
-            
-            if project_dir not in sys.path: 
+            project_dir = os.path.join(current_working_dir)
+
+            if project_dir not in sys.path:
                 sys.path.insert(0, project_dir)
-                
+            
             config = importlib.import_module("config")
             utils = importlib.import_module("utils")
             print(f"Running the project: {config.PROJECT_NAME}")
             print(f"Batch size: {args.batch_size}, epochs: {args.epochs}, Model: {args.model_name}")
             utils.run_train_scripts(args.batch_size, args.epochs, args.model_name, project_dir)
-        except ModuleNotFoundError:
+        except ModuleNotFoundError as e:
             print("No valid project found in the current directory")
+            print(traceback.format_exc())
+            sys.exit(1)
+        except Exception as e:
+            print("An unexpected error occurred:")
+            print(traceback.format_exc())
             sys.exit(1)
 
     def list_models(self):

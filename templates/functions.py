@@ -21,7 +21,9 @@ class NeuroStage():
             verbose=1
         )
         
-        model.reset_states()
+        for layer in model.layers:
+            if hasattr(layer, 'reset_states'):
+                layer.reset_states()
         
         history = model.fit(x_train, y_train, epochs=EPHOCS, 
                             validation_data=(x_val, y_val), 

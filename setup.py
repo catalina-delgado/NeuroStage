@@ -6,13 +6,15 @@ with open(os.path.join(os.path.dirname(__file__), 'README_pypi.md'), 'r', encodi
 
 setup(
     name="neurostage",  
-    version="0.1.1",
+    version="0.2",
     packages=find_packages(include=['templates', 'templates.*']),
     py_modules=["main", "__main__"],
     include_package_data=True,
     install_requires=[
-        "numpy",
-        "tensorflow",
+        "numpy>=1.21.0,<2.0.0",          # Compatible con NumPy 1.x
+        "tensorflow>=2.10.0,<3.0.0",    # Compatible con TensorFlow 2.x
+        "opencv-python>=4.5.0,<5.0.0",   # Compatible con OpenCV 4.x
+        "tensorboard>=2.10.0,<3.0.0"    # Compatible con TensorFlow 2.x y TensorBoard 2.x
     ],
     entry_points={
         "console_scripts": [
