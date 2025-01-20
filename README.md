@@ -113,7 +113,7 @@ File: `src/training/train_custom.py`
 ```python
 from functions import NeuroStage
 from imports import tf, np
-from src.models.model import Model
+from src.models.model import ModelCustom
 
 class TrainModel(NeuroStage):
     def __init__(self, batch_size=32, epochs=4, model_name='', models=None):
@@ -125,7 +125,7 @@ class TrainModel(NeuroStage):
         
         input = tf.keras.Input(shape=(256, 256, 1))  
         self.optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3, momentum=0.95)
-        self.architecture = Model()
+        self.architecture = ModelCustom()
         print(models)
         self.model = self.architecture.build_model(input)
         self.model.compile(optimizer=self.optimizer,
