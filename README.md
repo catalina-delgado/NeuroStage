@@ -74,14 +74,21 @@ File: `src/layers/layer_custom.py`
 ```python
 from imports import tf
 
+from imports import tf
+
 class CustomLayer(tf.keras.layers.Layer):
     def __init__(self, units, **kwargs):
         super().__init__(**kwargs)
         self.units = units
+        self.conv = tf.keras.layers.Conv2D(units, 3, activation='relu')
         self.dense = tf.keras.layers.Dense(units)
+        self.flatten = tf.keras.layers.Flatten()
 
     def call(self, inputs):
-        return self.dense(inputs)
+        x = self.conv(inputs)
+        x = self.flatten(x)
+        x = self.dense(x)
+        return x
 
 ```
 ## create a new model
@@ -92,14 +99,13 @@ from src.layers.layer_custom import CustomLayer
 
 class ModelCustom():
     def __init__(self): 
-        super(Model, self).__init__() 
+        super(ModelCustom, self).__init__() 
         self.layer = CustomLayer(64)
-        
+        self.dense = tf.keras.layers.Dense(1, activation='sigmoid')
         
     def build_model(self, input):
         x = self.layer(input)
-        x = self.layer(x)
-        x = self.layer(x)
+        x = self.dense(x)
         
         model = tf.keras.Model(inputs=input, outputs=x)
         
@@ -113,10 +119,10 @@ File: `src/training/train_custom.py`
 ```python
 from functions import NeuroStage
 from imports import tf, np
-from src.models.model import ModelCustom
+from src.models.model_custom import ModelCustom
 
 class TrainModel(NeuroStage):
-    def __init__(self, batch_size=32, epochs=4, model_name='', models=None):
+    def __init__(self, batch_size=32, epochs=4, model_name=''):
         super().__init__()
         
         self.BATCH_SIZE = batch_size
@@ -126,7 +132,6 @@ class TrainModel(NeuroStage):
         input = tf.keras.Input(shape=(256, 256, 1))  
         self.optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3, momentum=0.95)
         self.architecture = ModelCustom()
-        print(models)
         self.model = self.architecture.build_model(input)
         self.model.compile(optimizer=self.optimizer,
                          loss='binary_crossentropy',
@@ -138,7 +143,7 @@ class TrainModel(NeuroStage):
         X_val = np.random.rand(20, 256, 256, 1) 
         y_val = np.random.randint(0, 2, 20)
         
-        self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
+        self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)```
 ```
 By following this naming convention, the framework will automatically detect and execute the training class when running the following command:
 ```
