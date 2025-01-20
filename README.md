@@ -74,8 +74,6 @@ File: `src/layers/layer_custom.py`
 ```python
 from imports import tf
 
-from imports import tf
-
 class CustomLayer(tf.keras.layers.Layer):
     def __init__(self, units, **kwargs):
         super().__init__(**kwargs)
