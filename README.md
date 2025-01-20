@@ -28,7 +28,7 @@ It is designed as a layer-based pattern (for building modules, architectures, an
 |--------------------------|--------------------------------------------------------|
 | Model Management         | Allows customization for versioning and saving models. |
 | Test Automation          | Executes each training session in series as defined by the training module. |                                                       |
-| Tool Compatibility       | TensorFlow, TensorBoard                                            |
+| Tool Compatibility       | TensorFlow, TensorBoard, OpenCV, Numpy                                            |
 | Open Source              | MIT License                                            |
 | Flexibility              | Preconfigured but flexible, define rules and processes as per your case |
 | Collaboration            | Avalable                                               |
@@ -63,11 +63,13 @@ For more detailed information, visit the project page on PyPI:
 [NeuroStage](https://pypi.org/project/neurostage/)
 # Usage-Flow
 ## Start a new project
+To start a new project, use the following command. You can replace `my_project` with your desired project name:
+
 ```
 stage startproject my_project
 ```
 ## create a new layer
-File: src/layers/layer_custom.py
+File: `src/layers/layer_custom.py`
 ```python
 from imports import tf
 
@@ -82,7 +84,7 @@ class CustomLayer(tf.keras.layers.Layer):
 
 ```
 ## create a new model
-File: src/models/model_custom.py
+File: `src/models/model_custom.py`
 ```python
 from imports import tf
 from src.layers.layer_custom import CustomLayer
@@ -103,7 +105,10 @@ class ModelCustom():
         return model
 ```
 ## Create a training runner
-File: src/training/train_custom.py
+To ensure that the framework automatically recognizes the class to execute with the `run` command, the training file **must start with the word "train"** in its filename.
+
+### Example:
+File: `src/training/train_custom.py`  
 ```python
 from functions import NeuroStage
 from imports import tf, np
@@ -134,6 +139,47 @@ class TrainModel(NeuroStage):
         
         self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
 ```
+By following this naming convention, the framework will automatically detect and execute the training class when running the following command:
+```
+stage run
+```
+
+## Training function: init_fit
+The `init_fit` function is responsible for training a deep learning model using TensorFlow, providing essential features for monitoring, saving, and restoring the model.
+
+### Key functionalities:
+
+1. **TensorBoard logging:**
+   - Logs training metrics in the `experiments/{model_name}/logs-<timestamp>` directory.
+   - Allows visualization of training performance using TensorBoard.
+
+2. **Model checkpointing:**
+   - Saves the best model based on validation accuracy at `experiments/{model_name}/{model_name}.h5`.
+   - Ensures only the best version is stored.
+
+3. **Resetting model states:**
+   - Useful for models with recurrent layers that maintain states.
+
+4. **Model training:**
+   - Trains the model using the provided data and defined parameters.
+   - Uses callbacks for logging and checkpointing.
+
+5. **Loading best weights:**
+   - After training, loads the best saved weights to ensure optimal performance.
+
+6. **Final model saving:**
+   - Saves the fully trained model for later use.
+
+7. **Completion messages:**
+   - Provides feedback with the model save path and training completion message.
+
+### Example usage inside the training script:
+```python
+self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
+```
+
+This function helps streamline the training workflow, ensuring efficient tracking and reproducibility.
+
 ## Execution
 ```
 stage run --batch_size 32 --epochs 10 --model_name my_model
