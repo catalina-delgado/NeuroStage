@@ -2,15 +2,30 @@
 "NeuroStage is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
 
 # Purpose
-NeuroStage was born from the idea of automatically generating projects, with a specific focus on building deep learning models using TensorFlow. It is a tool designed for new users who need a standard structure without having to worry about organizing the project from scratch.
+NeuroStage was created to simplify the automatic generation of projects, with a strong focus on developing deep learning models using TensorFlow and running experiments sequentially. It is designed for new users who seek a standardized project structure without the hassle of organizing everything from scratch.
 
 # Índice
 
-1. [Design](#Design)
-2. [Features](#Features)
-3. [Installation](#installation) 
-4. [Usage Flow](#usage-flow)
-5. [Common Errors](https://github.com/catalina-delgado/NeuroStage/blob/main/standards/TROUBLESHOOTING.md)
+- [NeuroStage](#neurostage)
+- [Purpose](#purpose)
+- [Índice](#índice)
+- [Design](#design)
+  - [Modules](#modules)
+- [Features](#features)
+  - [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage-Flow](#usage-flow)
+  - [Start a new project](#start-a-new-project)
+  - [create a new layer](#create-a-new-layer)
+  - [create a new model](#create-a-new-model)
+  - [Create a training runner](#create-a-training-runner)
+  - [Training function: init\_fit](#training-function-init_fit)
+    - [Key functionalities:](#key-functionalities)
+    - [Example usage inside the training script:](#example-usage-inside-the-training-script)
+  - [Execution](#execution)
+  - [Experiments](#experiments)
+- [Contribute 📚](#contribute-)
+- [Try and Star the Project 🌟](#try-and-star-the-project-)
    
 # Design
 It is designed as a layer-based pattern (for building modules, architectures, and training) which is excellent for organizing a TensorFlow framework for deep learning testing. This modular approach facilitates integration with TensorBoard and promotes scalability. 
@@ -44,16 +59,16 @@ my_project/
 ├── functions.py          # Training functions file
 ├── imports.py            # Library imports file
 ├── experiments/          # Folder for experiments
-└── src/                  # Main source code folder
-    ├── layers/           # Folder for implementing custom layers
-    │   └── layer_a.py    # Example content
-    │   └── layer_b.py 
-    ├── models/           # Folder for defining models
-    │   └── model_a.py    # Example content
-    │   └── model_b.py 
-    └── training/         # Folder for compiling and starting training
-        └── train_a.py    # Example content
-        └── train_b.py
+├── src/                  # Main source code folder
+│    ├── layers/           # Folder for implementing custom layers
+│    │   └── layer_a.py    # Example content
+│    │   └── layer_b.py 
+│    ├── models/           # Folder for defining models
+│    │   └── model_a.py    # Example content
+│    │   └── model_b.py 
+├── training/             # Folder for compiling and starting training
+│    └── train_a.py        # Example content
+│    └── train_b.py
 ```
 # Installation
 To install **NeuroStage**, simply run the following command:
@@ -112,8 +127,7 @@ class ModelCustom():
 ## Create a training runner
 To ensure that the framework automatically recognizes the class to execute with the `run` command, the training file **must start with the word "train"** in its filename.
 
-### Example:
-File: `src/training/train_custom.py`  
+File: `training/train_custom.py`  
 ```python
 from functions import NeuroStage
 from imports import tf, np
@@ -141,7 +155,7 @@ class TrainModel(NeuroStage):
         X_val = np.random.rand(20, 256, 256, 1) 
         y_val = np.random.randint(0, 2, 20)
         
-        self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)```
+        self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
 ```
 By following this naming convention, the framework will automatically detect and execute the training class when running the following command:
 ```
@@ -185,6 +199,25 @@ self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATC
 This function helps streamline the training workflow, ensuring efficient tracking and reproducibility.
 
 ## Execution
+Enter your project folder, for this example the `my_project` folder, and run your training files.
 ```
+cd my_project
 stage run --batch_size 32 --epochs 10 --model_name my_model
 ```
+
+## Experiments
+To visualize experiment results, navigate to the experiments folder and execute the following command to launch TensorBoard:
+```
+tensorboard --logdir=experiments
+```
+Once TensorBoard is running, click on the provided server link in the terminal (usually starting with `http://localhost:6006`) to open the dashboard in your web browser.
+
+# Contribute 📚
+
+We welcome contributions to NeuroStage! If you have ideas for new features, improvements, or bug fixes, feel free to contribute by submitting a pull request.
+
+# Try and Star the Project 🌟
+
+If you find NeuroStage helpful, please consider trying it out and giving it a star on GitHub. Your support helps us grow and improve the project!
+
+Thank you for being part of our community! 💙
