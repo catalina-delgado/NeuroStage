@@ -134,12 +134,12 @@ from imports import tf, np
 from src.models.model_custom import ModelCustom
 
 class TrainModel(NeuroStage):
-    def __init__(self, batch_size=32, epochs=4, model_name=''):
+    def __init__(self, batch_size=32, epochs=4):
         super().__init__()
         
         self.BATCH_SIZE = batch_size
         self.EPHOCS = epochs
-        self.MODEL_NAME = model_name
+        self.MODEL_NAME = 'example_model'
         
         input = tf.keras.Input(shape=(256, 256, 1))  
         self.optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3, momentum=0.95)
@@ -154,8 +154,10 @@ class TrainModel(NeuroStage):
         y_train = np.random.randint(0, 2, 100) 
         X_val = np.random.rand(20, 256, 256, 1) 
         y_val = np.random.randint(0, 2, 20)
+        X_test = np.random.rand(20, 256, 256, 1) 
+        y_test = np.random.randint(0, 2, 20)
         
-        self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
+        history = self.init_fit(self.model, X_train, y_train, X_val, y_val, X_test, y_test, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
 ```
 By following this naming convention, the framework will automatically detect and execute the training class when running the following command:
 ```
@@ -172,28 +174,29 @@ The `init_fit` function is responsible for training a deep learning model using 
    - Allows visualization of training performance using TensorBoard.
 
 2. **Model checkpointing:**
-   - Saves the best model based on validation accuracy at `experiments/{model_name}/{model_name}.h5`.
-   - Ensures only the best version is stored.
+   - Saves the best model based on validation accuracy at `experiments/{model_name}/{model_name}.h5`
+   - Ensures only the best version is stored when save_best_only=`True`. If save_best_only=`False`, saves the model at the end of every epoch individually.
 
-3. **Resetting model states:**
-   - Useful for models with recurrent layers that maintain states.
-
-4. **Model training:**
+3. **Model training:**
    - Trains the model using the provided data and defined parameters.
-   - Uses callbacks for logging and checkpointing.
+   - Applies custom callbacks for checkpointing and TensorBoard logging.
+   - Supports integration of custom layers if needed.
 
-5. **Loading best weights:**
-   - After training, loads the best saved weights to ensure optimal performance.
+4. **Custom layers support:**
+   - Allows registration of custom layers before training, ensuring compatibility when saving and loading models.
 
-6. **Final model saving:**
+5. **Model saving:**
    - Saves the fully trained model for later use.
+
+6. **Testing saved models:**
+   - If models are saved after each epoch (save_best_only=False), automatically evaluates them on test data and logs the test loss and accuracy.
 
 7. **Completion messages:**
    - Provides feedback with the model save path and training completion message.
 
 ### Example usage inside the training script:
 ```python
-self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, self.MODEL_NAME)
+self.init_fit(self.model, X_train, y_train, X_val, y_val, self.EPHOCS, self.BATCH_SIZE, model_name=MODEL_NAME)
 ```
 
 This function helps streamline the training workflow, ensuring efficient tracking and reproducibility.
@@ -202,7 +205,7 @@ This function helps streamline the training workflow, ensuring efficient trackin
 Enter your project folder, for this example the `my_project` folder, and run your training files.
 ```
 cd my_project
-stage run --batch_size 32 --epochs 10 --model_name my_model
+stage run --batch_size 32 --epochs 10 
 ```
 
 ## Experiments

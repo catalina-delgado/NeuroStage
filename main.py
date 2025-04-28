@@ -4,6 +4,7 @@ import sys
 import importlib
 import shutil
 import traceback
+import templates.utils as utils
 
 class CustomArgumentParser(argparse.ArgumentParser):
     """Customize the parser's error handling to provide more user-friendly messages"""
@@ -34,8 +35,7 @@ class InitMain:
         # Subcommand 'run'
         run_parser = subparsers.add_parser('run', help="Run the current project")
         run_parser.add_argument('--batch_size', type=int, default=32, help="Batch size for training")
-        run_parser.add_argument('--epochs', type=int, default=10, help="Number of epochs for training")
-        run_parser.add_argument('--model_name', type=str, default='', help="Assign a model name")
+        run_parser.add_argument('--epochs', type=int, default=100, help="Number of epochs for training")
 
         # Argumento independiente: listar modelos
         parser.add_argument('--list', action='store_true', help="List the available models")
@@ -75,7 +75,6 @@ class InitMain:
         # Crear archivos iniciales
         files_to_create = {
             # Archivos que se deben copiar
-            os.path.join(templates_dir, "utils.py"): os.path.join(project_name, "utils.py"),
             os.path.join(templates_dir, "__init__.py"): os.path.join(project_name, "__init__.py"),
             os.path.join(templates_dir, "functions.py"): os.path.join(project_name, "functions.py"),
             os.path.join(templates_dir, "imports.py"): os.path.join(project_name, "imports.py"),
@@ -103,21 +102,23 @@ class InitMain:
                     f.write(dest if isinstance(dest, str) else "")
 
         print(f"Project '{project_name}' successfully created with the basic structure")
-
-    def run_project(self, args):
         
+    def run_project(self, args):
         try:
+            config_path = os.path.join(os.getcwd(), 'config.py')
+            if not os.path.exists(config_path):
+                print("No project found in the current directory")
+                sys.exit(1)
+                
             current_working_dir = os.getcwd()
             project_dir = os.path.join(current_working_dir)
 
             if project_dir not in sys.path:
                 sys.path.insert(0, project_dir)
-            
+
             config = importlib.import_module("config")
-            utils = importlib.import_module("utils")
-            print(f"Running the project: {config.PROJECT_NAME}")
-            print(f"Batch size: {args.batch_size}, epochs: {args.epochs}, Model: {args.model_name}")
-            utils.run_train_scripts(args.batch_size, args.epochs, args.model_name, project_dir)
+            utils.run_train_scripts(args.batch_size, args.epochs, config.PROJECT_NAME, project_dir)
+            
         except ModuleNotFoundError as e:
             print("No valid project found in the current directory")
             print(traceback.format_exc())
@@ -143,7 +144,7 @@ class InitMain:
         print( """ 
               Usage example: 
               1. Train a specific model: 
-              stage run --batch_size 32 --epochs 10 --model_name my_model 
+              stage run --batch_size 32 --epochs 100
               
               2. List the available models: 
               stage --list 
