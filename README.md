@@ -1,4 +1,4 @@
-# NeuroStage
+# NeuroStage [![PyPI Downloads](https://static.pepy.tech/badge/neurostage)](https://pepy.tech/projects/neurostage)
 "NeuroStage is a framework that allows users to create and manage deep learning projects in a structured and modular way, adapted for TensorFlow. It includes integration with tools like Tensorboard, enabling users to efficiently track and improve their models."
 
 # Purpose
